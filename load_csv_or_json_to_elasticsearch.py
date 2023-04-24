@@ -79,6 +79,7 @@ class ElasticDataloader(object):
                 yield self._prepare_document_for_bulk(es_dataset, row, cnt)
 
     def _prepare_document_for_bulk(self, es_dataset, row, cnt):
+        row = {k: v if v else None for k, v in row.items()}
         row["_id"] = row.get(es_dataset.es_id_field, cnt +
                              es_dataset.es_index_start_from)
         row["_index"] = es_dataset.es_index_name
